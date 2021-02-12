@@ -23,7 +23,6 @@ const SignUp = (props) => {
                 <Card>
                     <Card.Title style={styles.textStyle}>Welcome to BottleBrush</Card.Title>
                     <Card.Divider />
-
                     <Input
                         leftIcon={<MaterialIcons name="person" size={24} color="black" />}
                         placeholder='Name'
@@ -41,6 +40,17 @@ const SignUp = (props) => {
                         onChangeText={
                             function (currentInput) {
                                 setIUTMail(currentInput);
+                            }
+                        }
+                        onEndEditing ={
+                            function(currentInput) {
+                                if (IUTMailAddress.includes("@iut-dhaka.edu")){
+                                    setIUTMail(currentInput);
+                                }
+                                else {
+                                    setIUTMail("");
+                                    alert("Please use an email address of IUT-Domain");
+                                }
                             }
                         }
                     />
@@ -100,7 +110,7 @@ const SignUp = (props) => {
                                             sId: SID,    
                                             password: Password,
                                             batchYear: BatchYear,
-                                            ref_code: ref_code
+                                            ref_code: code
                                         }).then(() => {
                                             setLoading(false);
                                             alert('Account Created Succesfully!  Firebase ID is:  ' + userCreds.user.uid);
