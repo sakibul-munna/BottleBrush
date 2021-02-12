@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AuthApp",
-    "slug": "AuthApp",
+    "name": "BottleBrush",
+    "slug": "BottleBrush",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

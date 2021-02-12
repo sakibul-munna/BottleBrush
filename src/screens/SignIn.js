@@ -34,7 +34,7 @@ const SignIn = (props) => {
             <AuthContext.Consumer>
                 {(auth) => (<View style={styles.viewStyle}>
                     <Card>
-                        <Card.Title>Welcome to SignIn Screen</Card.Title>
+                        <Card.Title style={styles.textStyle}>Sign In to BottleBrush</Card.Title>
                         <Card.Divider />
                         <Input
                             leftIcon={<MaterialCommunityIcons name="email-edit" size={24} color="black" />}
@@ -107,7 +107,7 @@ const styles = StyleSheet.create(
         viewStyle: {
             flex: 1,
             justifyContent: 'center',
-            backgroundColor: '#f2fbff'
+            backgroundColor: 'white'
         },
         buttonStyle: {
             padding: 10,

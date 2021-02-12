@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList, ActivityIndicator, SafeAreaView, } from "react-native";
-import { Card, Button, Text, Avatar, Input } from "react-native-elements";
+import { View, StyleSheet, FlatList } from "react-native";
 import PostCard from "./../components/PostCard";
-import { Entypo } from "@expo/vector-icons";
-import { AuthContext } from "../providers/AuthProvider";
 import HeaderHome from "./../components/Header";
-import moment from "moment";
-
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
@@ -14,10 +9,7 @@ import Loading from "../components/Loading";
 
 const HomeScreen = (props) => {
   const [posts, setPosts] = useState([]);
-  const [recentPost, setRecentPost] = useState([]);
   const [loading, setLoading] = useState(false);
-  const input = React.createRef();
-
 
   const loadPosts = async () => {
     setLoading(true);
@@ -37,21 +29,20 @@ const HomeScreen = (props) => {
     })
   };
 
+  
   useEffect(() => {
     loadPosts();
   }, []);
 
   if (!loading) {
     return (
-      <AuthContext.Consumer>
-        {(auth) => (
           <View style={styles.viewStyle}>
             <HeaderHome
               DrawerFunction={() => {
                 props.navigation.toggleDrawer();
               }}
             />
-            <Card>
+            {/* {<Card>
               <Input
                 ref={input}
                 clearButtonMode={'always'}
@@ -81,18 +72,13 @@ const HomeScreen = (props) => {
                   alert(error);
                 })
               }} />
-            </Card>
-            
+            </Card> } */}
               <FlatList
                 data={posts}
-                //inverted={true}
-                //keyExtractor={(item) => item.key}
                 renderItem={function ({ item }) {
                   
                   return (
                     <PostCard
-                      //currentUser_Name={auth.CurrentUser.name}
-                      //currentUser_Email={auth.CurrentUser.email}
                       post_ID={item.key}
                       author={item.data.author}
                       title={item.data.created_at}
@@ -102,10 +88,7 @@ const HomeScreen = (props) => {
                   );
                 }}
               />
-            
           </View>
-        )}
-      </AuthContext.Consumer>
     );
   } else {
     return (
