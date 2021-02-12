@@ -5,7 +5,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import { MaterialCommunityIcons, FontAwesome5, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { removeData } from "../functions/AsyncStorageFunction";
 import UploadPhoto from "../components/UploadPhoto";
-
+import HeaderHome from "./../components/Header";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
@@ -17,24 +17,11 @@ const ProfileScreen = (props) => {
     <AuthContext.Consumer>
       {(auth) => (
         <View style={styles.mainViewStyle}>
-          <Header
-            leftComponent={{
-              icon: "menu",
-              color: "#fff",
-              onPress: function () {
+            <HeaderHome
+              DrawerFunction={() => {
                 props.navigation.toggleDrawer();
-              },
-            }}
-            centerComponent={{ text: "The Office", style: { color: "#fff" } }}
-            rightComponent={{
-              icon: "lock-outline",
-              color: "#fff",
-              onPress: function () {
-                auth.setIsLoggedIn(false);
-                auth.setCurrentUser({});
-              },
-            }}
-          />
+              }}
+            />
           <View style={styles.viewStyle2}>
           <UploadPhoto props={props} />
             <Text style={styles.textStyle2}>
@@ -93,7 +80,7 @@ const styles = StyleSheet.create({
   },
   mainViewStyle: {
     flex: 1,
-    backgroundColor: '#f2fbff'
+    backgroundColor: 'white'
   },
   viewStyle2: {
     flexDirection: 'column',
