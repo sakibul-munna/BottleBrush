@@ -4,6 +4,7 @@ import { Text, Card, Button, Avatar, Header } from "react-native-elements";
 import { getDataJSON } from "../functions/AsyncStorageFunction";
 import { AuthContext } from "../providers/AuthProvider";
 import { NotificationsCard } from "../components/NotificationsCard";
+import {HeaderHome} from "../components/Header"
 const NotificationScreen = (props) => {
   const [allNotifications, setAllNotifications] = useState([]);
   const [currentUserNotifications, setCurrentUserNotifications] = useState([]);
@@ -26,25 +27,12 @@ const NotificationScreen = (props) => {
     <AuthContext.Consumer>
       {(auth) => (
         <View style={styles.viewStyle}>
-          <Header
-            leftComponent={{
-              icon: "menu",
-              color: "#fff",
-              onPress: function () {
+                      <HeaderHome
+              DrawerFunction={() => {
                 props.navigation.toggleDrawer();
-              },
-            }}
-            centerComponent={{ text: "The Office", style: { color: "#fff" } }}
-            rightComponent={{
-              icon: "lock-outline",
-              color: "#fff",
-              onPress: function () {
-                auth.setIsLoggedIn(false);
-                auth.setCurrentUser({});
-              },
-            }}
-          />
-          <SafeAreaView style={flex = 1}>
+              }}
+            />
+          <SafeAreaView>
             <FlatList
               data={allNotifications}
               inverted={true}
