@@ -6,7 +6,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import HomeScreen from "./src/screens/HomeScreen";
-import NotificationScreen from "./src/screens/NotificationScreen";
+import NotificationScreen from "./src/screens/NotificationScreen"
 import ProfileScreen from "./src/screens/ProfileScreen";
 import SignIn from "./src/screens/SignIn";
 import SignUp from "./src/screens/SignUp";
@@ -92,7 +92,7 @@ const HomeTabScreen = () => {
         }}
       />
             <HomeTab.Screen
-        name="Notification"
+        name="NotificationScreen"
         component={NotificationScreen}
         options={{
           tabBarLabel: "Notifications",

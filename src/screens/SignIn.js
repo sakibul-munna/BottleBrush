@@ -13,20 +13,6 @@ const SignIn = (props) => {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [userId, setuserID] = useState("");
-
-    const getUserData = async (userId) => {
-        setLoading(true);
-        firebase.firestore().collection('users').get().then((snapshot) =>{
-            snapshot.docs.forEach(doc => {
-                console.log(doc.data)
-            })
-            setLoading(false);
-        }).catch((error) => {
-            setLoading(false);
-            alert(error);
-        })
-    }
 
     if (loading) { return <Loading /> }
     else {
@@ -69,14 +55,12 @@ const SignIn = (props) => {
                                     .then((userCreds) => {
                                         setLoading(false)
                                         auth.setIsLoggedIn(true);
-                                        setuserID(userCreds.user.uid);
                                         auth.setCurrentUser(userCreds.user);
                                     })
                                     .catch((error) => {
                                         setLoading(false)
                                         alert(error);
                                     });
-                                getUserData (userId)
                             }}
                         />
                         <Button

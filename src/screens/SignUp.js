@@ -8,7 +8,7 @@ import "firebase/firestore";
 import Loading from "./../components/Loading";
 
 const SignUp = (props) => {
-    const [Name, setName]= useState("");
+    const [Name, setName] = useState("");
     const [IUTMailAddress, setIUTMail] = useState("");
     const [SID, setSID] = useState("");
     const [Password, setPassword] = useState("");
@@ -33,7 +33,6 @@ const SignUp = (props) => {
                         }
                     />
 
-
                     <Input
                         leftIcon={<MaterialCommunityIcons name="email-edit" size={24} color="black" />}
                         placeholder='IUT E-Mail Address'
@@ -42,17 +41,7 @@ const SignUp = (props) => {
                                 setIUTMail(currentInput);
                             }
                         }
-                        onEndEditing ={
-                            function(currentInput) {
-                                if (IUTMailAddress.includes("@iut-dhaka.edu")){
-                                    setIUTMail(currentInput);
-                                }
-                                else {
-                                    setIUTMail("");
-                                    alert("Please use an email address of IUT-Domain");
-                                }
-                            }
-                        }
+
                     />
 
                     <Input
@@ -100,32 +89,40 @@ const SignUp = (props) => {
                         type='solid'
                         onPress={
                             function () {
-                                if (Name && IUTMailAddress && SID && Password && BatchYear && code) {
-                                    setLoading(true);
-                                    firebase.auth().createUserWithEmailAndPassword(IUTMailAddress, Password).then(((userCreds) => {
-                                        userCreds.user.updateProfile({ displayName: Name });
-                                        firebase.firestore().collection('users').doc(userCreds.user.uid).set({
-                                            name: Name,
-                                            email: IUTMailAddress,
-                                            sId: SID,    
-                                            password: Password,
-                                            batchYear: BatchYear,
-                                            ref_code: code
-                                        }).then(() => {
+                                if (IUTMailAddress.includes("@iut-dhaka.edu")) {
+                                    setIUTMail(currentInput);
+                                    if (Name && IUTMailAddress && SID && Password && BatchYear && code) {
+                                        setLoading(true);
+                                        firebase.auth().createUserWithEmailAndPassword(IUTMailAddress, Password).then(((userCreds) => {
+                                            userCreds.user.updateProfile({ displayName: Name });
+                                            firebase.firestore().collection('users').doc(userCreds.user.uid).set({
+                                                name: Name,
+                                                email: IUTMailAddress,
+                                                sId: SID,
+                                                password: Password,
+                                                batchYear: BatchYear,
+                                                ref_code: code
+                                            }).then(() => {
+
+                                                setLoading(false);
+                                                alert('Account Created Succesfully!  Firebase ID is:  ' + userCreds.user.uid);
+                                                console.log(userCreds.user);
+                                                props.navigation.navigate("SignIn");
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        })).catch((error) => {
                                             setLoading(false);
-                                            alert('Account Created Succesfully!  Firebase ID is:  ' + userCreds.user.uid);
-                                            console.log(userCreds.user);
-                                            props.navigation.navigate("SignIn");
-                                        }).catch((error) => {
-                                            alert(error)
+                                            alert(error);
                                         })
-                                    })).catch((error) => {
+                                    } else {
                                         setLoading(false);
-                                        alert(error);
-                                    })
-                                } else {
-                                    setLoading(false);
-                                    alert("Fields cannot be empty!")
+                                        alert("Fields cannot be empty!")
+                                    }
+                                }
+                                else {
+                                    setIUTMail("");
+                                    alert("Please use an email address of IUT-Domain");
                                 }
                             }
                         }
@@ -158,7 +155,7 @@ const styles = StyleSheet.create(
             flex: 1,
             justifyContent: 'center',
             backgroundColor: '#FFFFFF',
-           // backgroundImage: "linear-gradient(to right, #b24592 , #f15f79)"
+            // backgroundImage: "linear-gradient(to right, #b24592 , #f15f79)"
         },
         viewStyle2: {
             justifyContent: 'flex-start',

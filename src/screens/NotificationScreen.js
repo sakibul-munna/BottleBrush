@@ -4,7 +4,7 @@ import { Text, Card, Button, Avatar, Header } from "react-native-elements";
 import { getDataJSON } from "../functions/AsyncStorageFunction";
 import { AuthContext } from "../providers/AuthProvider";
 import { NotificationsCard } from "../components/NotificationsCard";
-import {HeaderHome} from "../components/Header"
+import HeaderHome from "../components/Header"
 const NotificationScreen = (props) => {
   const [allNotifications, setAllNotifications] = useState([]);
   const [currentUserNotifications, setCurrentUserNotifications] = useState([]);
