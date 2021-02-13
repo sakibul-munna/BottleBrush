@@ -100,11 +100,11 @@ const HomeScreen = (props) => {
 const styles = StyleSheet.create({
   textStyle: {
     fontSize: 30,
-    color: "blue",
+    color: "#de3358",
   },
   viewStyle: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#ffffff'
   },
 });
 
