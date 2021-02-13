@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { Input, Button, Card } from "react-native-elements";
 import { MaterialCommunityIcons, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { AuthContext } from "../providers/AuthProvider";
@@ -19,11 +19,12 @@ const SignIn = (props) => {
         return (
             <AuthContext.Consumer>
                 {(auth) => (<View style={styles.viewStyle}>
+                   <View style={styles.viewStyle}>
                     <Card>
-                        <View style={styles.viewStyle2}>
+                        
                         <Image style={styles.tinyLogo} source={require('./../../assets/logo.png')} />
-//                         <Card.Title style={styles.textStyle}>Sign In to BottleBrush</Card.Title>
-//                         <Card.Divider />
+                       //<Card.Title style={styles.textStyle}>Sign In to BottleBrush</Card.Title>
+                       //<Card.Divider />
                         <Input
                             leftIcon={<MaterialCommunityIcons name="email-edit" size={20} color="#de3358" />}
                             placeholder='IUT E-mail Address'
@@ -79,8 +80,9 @@ const SignIn = (props) => {
                             }
 
                         />
-                        </View>
+                        
                     </Card>
+                    </View>
                 </View>)}
             </AuthContext.Consumer>
         );
