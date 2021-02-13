@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Switch, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Card, Button, Input } from "react-native-elements";
 import { Entypo } from "@expo/vector-icons";
 import { AuthContext } from "../providers/AuthProvider";

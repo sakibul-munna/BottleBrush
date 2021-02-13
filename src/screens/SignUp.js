@@ -103,7 +103,6 @@ const SignUp = (props) => {
                                                 batchYear: BatchYear,
                                                 ref_code: code
                                             }).then(() => {
-
                                                 setLoading(false);
                                                 alert('Account Created Succesfully!  Firebase ID is:  ' + userCreds.user.uid);
                                                 console.log(userCreds.user);

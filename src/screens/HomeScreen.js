@@ -76,9 +76,9 @@ const HomeScreen = (props) => {
               <FlatList
                 data={posts}
                 renderItem={function ({ item }) {
-                  
+
                   return (
-                    <PostCard
+                    <PostCard                      
                       post_ID={item.key}
                       author={item.data.author}
                       title={item.data.created_at}

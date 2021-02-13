@@ -6,175 +6,136 @@ import { Entypo } from "@expo/vector-icons";
 import { storeDataJSON, addDataJSON, getDataJSON } from '../functions/AsyncStorageFunction';
 import CommentCard from "../components/CommentCard";
 import moment from "moment";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import Loading from "./../components/Loading"
+import HeaderHome from "./../components/Header"
 
 const PostDetailsScreen = (props) => {
     let info = props.route.params;
     const [currentComment, setcurrentComment] = useState('');
-    const [allComments, setallComments] = useState([]);
-    const [likes, setLikes] = useState([]);
-    const [notifications, setNotifications] = useState([]);
+    const [Post, setPost] = useState({});
     const [postComments, setPostComments] = useState([]);
     const [loading, setLoading] = useState(false);
     const input = React.createRef();
-    const [allNotifications, setAllNotifications] = useState([]);
 
-    const loadComments = async () => {
-        setLoading(true);
-        let allcomments = await getDataJSON('Comments');
-        setallComments(allcomments);
-        if (allcomments != null) {
-            setPostComments(allcomments.filter((thisComment) => thisComment.post_ID == info.post_ID));
-        } else {
-            setPostComments([]);
-        }
-    };
+    const loadPostandComments = async (postId) => {
+        firebase.firestore().collection('posts').doc(info).onSnapshot((doc) => {
+            let snap = doc.data();
+            setPost(snap);
+            setPostComments(snap.comments)
+        });
+        console.log("Post e ki ache ? " + Post.likes.length);
+    }
 
     useEffect(() => {
-        loadComments();
+        setLoading(true);
+        loadPostandComments();
+        setLoading(false);
     }, []);
-
-    return (
-        <AuthContext.Consumer>
-            {(auth) => (
-                <View style={styles.viewStyle}>
-                    <Header
-                        leftComponent={{
-                            icon: "menu",
-                            color: "#fff",
-                            onPress: function () {
+    if (!loading) {
+        return (
+            <AuthContext.Consumer>
+                {(auth) => (
+                    <View style={styles.viewStyle}>
+                        <HeaderHome
+                            DrawerFunction={() => {
                                 props.navigation.toggleDrawer();
-                            },
-                        }}
-                        centerComponent={{ text: "Somewhere In Blog", style: { color: "#fff" } }}
-                        rightComponent={{
-                            icon: "lock-outline",
-                            color: "#fff",
-                            onPress: function () {
-                                auth.setIsLoggedIn(false);
-                                auth.setCurrentUser({});
-                            },
-                        }}
-                    />
-                    <Card style={styles.cardStyle}>
-                        <View
-                            style={{
-                                flexDirection: "row",
-                                alignItems: "center",
                             }}
-                        >
-                            <Avatar
-                                containerStyle={{ backgroundColor: "#ffab91" }}
-                                rounded
-                                icon={{ name: "user", type: "font-awesome", color: "black" }}
-                                activeOpacity={1}
-                            />
-                            <Text h4Style={{ padding: 10 }} h4>
-                                {info.author}
+                        />
+                        <Card style={styles.cardStyle}>
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Avatar
+                                    containerStyle={{ backgroundColor: "#ffab91" }}
+                                    rounded
+                                    icon={{ name: "user", type: "font-awesome", color: "black" }}
+                                    activeOpacity={1}
+                                />
+                                <Text h4Style={{ padding: 10 }} h4>
+                                    {Post.author}
+                                </Text>
+                            </View>
+                            <Text style={{ fontStyle: "italic" }}> {Post.created_at}</Text>
+                            <Text
+                                style={{
+                                    paddingVertical: 10,
+                                }}
+                            >
+                                {Post.body}
                             </Text>
+                        </Card>
+                        <Card.Divider />
+                        <Input
+                            ref={input}
+                            clearButtonMode={'always'}
+                            placeholder="  Write Something!"
+                            leftIcon={<Entypo name="pencil" size={24} color="black" />}
+                            style={styles.inputStyle}
+                            multiline={true}
+                            onChangeText={
+                                function (comment) {
+                                    setcurrentComment(comment);
+                                }
+                            }
+                        />
+                        <View style={styles.buttonStyle}>
+                            <Button title="Comment" color="#50a8e0" type="outline" onPress={
+                                function () {
+                                    setLoading(true);
+                                    if(currentComment != ""){
+                                        let comment = {
+                                            "author" : auth.CurrentUser.displayName,
+                                            "comment_body": currentComment,
+                                            "commentor_id": auth.CurrentUser.uid,
+                                            "post_ID": info,
+                                            "created_at": "Commented On " + moment().format("DD MMM, YYYY"),
+                                        }
+                                        firebase.firestore().collection('posts').doc(info).update({
+                                            comments: firebase.firestore.FieldValue.arrayUnion(comment)
+                                        }).then(()=>{
+                                            
+                                        });
+                                    }else{
+                                        alert("Comment is empty!");
+                                    }
+                                    input.current.clear();
+                                    setcurrentComment('');
+                                    setLoading(false);
+                                }
+                            }
+                            />
                         </View>
-                        <Text style={{ fontStyle: "italic" }}> {info.created_at}</Text>
-                        <Text
-                            style={{
-                                paddingVertical: 10,
+                        <FlatList
+                            data={postComments}
+                            scrollsToTop={true}
+                            keyExtractor={(item) => item.comment_ID}
+                            renderItem={function ({ item }) {
+                                return (
+                                    <CommentCard
+                                        author={item.author}
+                                        time={item.created_at}
+                                        body={item.comment_body}
+                                    />
+                                );
                             }}
-                        >
-                            {info.body}
-                        </Text>
-                    </Card>
-                    <Text style={styles.textstyle}>0 Likes, {postComments.length} Comments.</Text>
-
-                    <Card.Divider />
-                    <Input
-                        ref={input}
-                        clearButtonMode={'always'}
-                        placeholder="  Write Something!"
-                        leftIcon={<Entypo name="pencil" size={24} color="black" />}
-                        style={styles.inputStyle}
-                        multiline={true}
-                        onChangeText={
-                            function (comment) {
-                                setcurrentComment(comment);
-                            }
-                        }
-                    />
-                    <View style={styles.buttonStyle}>
-                        <Button title="Comment" color="#50a8e0" type="outline" onPress={
-                            function () {
-                                setLoading(true);
-                                let flag = 0;
-                                if (allComments == undefined) {
-                                    flag = 1;
-                                }
-                                else {
-                                    flag = allComments.length + 1;
-                                }
-
-                                if (currentComment != '') {
-                                    let newcomment = {
-                                        post_ID: info.post_ID,
-                                        comment_ID: flag,
-                                        author: info.author,
-                                        time: moment().format('DD MMM, YYYY'),
-                                        body: currentComment,
-                                    };
-                                    if (postComments == undefined) {
-                                        setPostComments([newcomment]);
-                                    } else {
-                                        setPostComments([...postComments, newcomment]);
-                                    }
-                                    if (allComments == undefined) {
-                                        setallComments([newcomment]);
-                                        storeDataJSON('Comments', [newcomment]);
-                                    } else {
-                                        setallComments([...allComments, newcomment]);
-                                        addDataJSON('Comments', newcomment);
-                                    }
-                                }
-                                input.current.clear();
-                                setcurrentComment('');
-
-                                flag = 0;
-                                if (allNotifications == undefined) {
-                                    flag = 1;
-                                }
-                                else {
-                                    flag = allNotifications.length + 1;
-                                }
-                                let newNotification = {
-                                    notified_user_email: props.currentUser_Email,
-                                    notification_ID: flag,
-                                    creator: auth.CurrentUser.name,
-                                    type: "Commented On",
-                                }
-                                if (allNotifications == undefined) {
-                                    setAllNotifications([newNotification]);
-                                    storeDataJSON('Notifications', [newNotification]);
-                                } else {
-                                    setAllNotifications([...allNotifications, newNotification]);
-                                    addDataJSON('Notifications', newNotification);
-                                }
-                            }
-                        }
                         />
                     </View>
-                    <FlatList
-                        data={postComments}
-                        scrollsToTop={true}
-                        keyExtractor={(item) => item.comment_ID}
-                        renderItem={function ({ item }) {
-                            return (
-                                <CommentCard
-                                    author={item.author}
-                                    time={item.time}
-                                    body={item.body}
-                                />
-                            );
-                        }}
-                    />
-                </View>
-            )}
-        </AuthContext.Consumer>
-    )
+                )}
+            </AuthContext.Consumer>
+        )
+    }
+    else {
+        return (
+            <Loading />
+        );
+    }
+
 }
 const styles = StyleSheet.create({
     textstyle: {
