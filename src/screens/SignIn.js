@@ -22,8 +22,6 @@ const SignIn = (props) => {
                     <View style={styles.viewStyle}>
                         <Card>
                             <Image style={styles.tinyLogo} source={require('./../../assets/logo.png')} />
-                            <Card.Title style={styles.textStyle}>Sign In to BottleBrush</Card.Title>
-                            <Card.Divider />
                             <Input
                                 leftIcon={<MaterialCommunityIcons name="email-edit" size={20} color="#de3358" />}
                                 placeholder='IUT E-mail Address'
@@ -33,7 +31,6 @@ const SignIn = (props) => {
                                     }
                                 }
                             />
-
                             <Input
                                 leftIcon={<FontAwesome5 name="key" size={20} color="#de3358" />}
                                 placeholder='Password'

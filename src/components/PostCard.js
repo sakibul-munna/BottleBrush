@@ -6,6 +6,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const PostCard = (props) => {
   let id = props.post_ID
@@ -72,7 +73,7 @@ const PostCard = (props) => {
             <Avatar
               containerStyle={{ backgroundColor: "#ffab91" }}
               rounded
-              icon={{ name: "user", type: "font-awesome", color: "black" }}
+              icon={{ name: "user", type: "font-awesome", color: "#de3358" }}
               activeOpacity={1}
             />
             <Text h4Style={{ padding: 10 }} h4>
@@ -90,9 +91,9 @@ const PostCard = (props) => {
           <Card.Divider />
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Button
-              type="outline"
+              type="clear"
               title={"Like (" + LikesCount + ")"}
-              icon={<AntDesign name="like2" size={24} color="dodgerblue" />}
+              icon={<AntDesign name="like2" size={24} color="#de3358" />}
               onPress={
                 function () {
                   let newlike = {
@@ -128,7 +129,9 @@ const PostCard = (props) => {
                 }
               }
             />
-            <Button type="outline" title={"Comment (" + CommentsCount + ")"} onPress={
+            <Button type="clear" title={"Comment (" + CommentsCount + ")"}
+            icon={<MaterialCommunityIcons name="message-outline" size={24} color="#de3358" />}
+            onPress={
               function () {
                 props.navigation.navigate("PostDetailsScreen", props.post_ID,  LikesCount);
               }

@@ -12,7 +12,8 @@ import SignIn from "./src/screens/SignIn";
 import SignUp from "./src/screens/SignUp";
 import PostDetailsScreen from "./src/screens/PostDetailsScreen";
 import CreatePostScreen from "./src/screens/CreatePostScreen";
-
+import Onboarding from "./src/screens/Onboarding";
+import MessageScreen from "./src/screens/MessageScreen";
 import { AuthContext, AuthProvider } from "./src/providers/AuthProvider";
 import { Entypo, AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -96,8 +97,8 @@ const HomeTabScreen = () => {
         }}
       />
       <HomeTab.Screen
-        name="NotificationScreen"
-        component={NotificationScreen}
+        name="MessageScreen"
+        component={MessageScreen}
         options={{
           tabBarLabel: "Notifications",
           tabBarIcon: ({ focused }) =>
@@ -119,7 +120,12 @@ const HomeTabScreen = () => {
 
 const AuthStackScreen = () => {
   return (
-    <AuthStack.Navigator initialRouteName="SignIn">
+    <AuthStack.Navigator initialRouteName="Onboarding">
+      <AuthStack.Screen
+        name="Onboarding"
+        component={Onboarding}
+        options={{ headerShown: false }}
+      />
       <AuthStack.Screen
         name="SignIn"
         component={SignIn}
