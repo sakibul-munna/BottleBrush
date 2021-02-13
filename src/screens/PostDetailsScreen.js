@@ -54,7 +54,7 @@ const PostDetailsScreen = (props) => {
                                 <Avatar
                                     containerStyle={{ backgroundColor: "#ffab91" }}
                                     rounded
-                                    icon={{ name: "user", type: "font-awesome", color: "black" }}
+                                    icon={{ name: "user", type: "font-awesome", color: "#de3358" }}
                                     activeOpacity={1}
                                 />
                                 <Text h4Style={{ padding: 10 }} h4>
@@ -75,7 +75,7 @@ const PostDetailsScreen = (props) => {
                             ref={input}
                             clearButtonMode={'always'}
                             placeholder="  Write Something!"
-                            leftIcon={<Entypo name="pencil" size={24} color="black" />}
+                            leftIcon={<Entypo name="pencil" size={24} color="#de3358" />}
                             style={styles.inputStyle}
                             multiline={true}
                             onChangeText={
@@ -85,7 +85,9 @@ const PostDetailsScreen = (props) => {
                             }
                         />
                         <View style={styles.buttonStyle}>
-                            <Button title="Comment" color="#50a8e0" type="outline" onPress={
+                            <Button title="Comment" 
+                            titleStyle={{ color: "#de3358" }}
+                            color="#de3358" type="outline" onPress={
                                 function () {
                                     setLoading(true);
                                     if(currentComment != ""){
