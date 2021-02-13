@@ -1,0 +1,23 @@
+#####So if you want to create a react-native app(a new one) with expo without problems , steps are :
+
+-npm install 
+-expo-cli init [project-name] from "APP"
+-cd [project-name]
+-expo start (dont use npm start or yarn start)
+-done
+
+#####Dependencies for this project####
+
+npm install @react-navigation/native @react-navigation/stack
+expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
+AsyncStorage -> npm i @react-native-community/async-storage
+elements -> npm install react-native-elements
+moment -> npm install moment --save
+expo install expo-image-picker
+npm install @react-navigation/material-bottom-tabs react-native-paper
+npm install @react-navigation/drawer
+npm install --save react-native-vector-icons
+npm i @react-native-community/datetimepicker
+
+npm add expo
+npm install 

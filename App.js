@@ -10,10 +10,11 @@ import NotificationScreen from "./src/screens/NotificationScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import SignIn from "./src/screens/SignIn";
 import SignUp from "./src/screens/SignUp";
-import PostScreen  from "./src/screens/PostScreen";
+import PostDetailsScreen from "./src/screens/PostDetailsScreen";
+import CreatePostScreen from "./src/screens/CreatePostScreen";
 
 import { AuthContext, AuthProvider } from "./src/providers/AuthProvider";
-import { Entypo, AntDesign, Ionicons } from "@expo/vector-icons";
+import { Entypo, AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import firebase from "firebase/app";
 
@@ -31,7 +32,11 @@ const firebaseConfig = {
   appId: "1:280286938121:web:a2b4403b6e3833202564d8"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
 const AuthStack = createStackNavigator();
 const HomeTab = createMaterialBottomTabNavigator();
 const AppDrawer = createDrawerNavigator();
@@ -40,17 +45,17 @@ const HomeStack = createStackNavigator();
 const AppDrawerScreen = () => {
   return (
     <AppDrawer.Navigator>
-      <AppDrawer.Screen name="Home" component={HomeTabScreen} options={{headerShown: false}} />
-      <AppDrawer.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}} />
+      <AppDrawer.Screen name="Home" component={HomeTabScreen} options={{ headerShown: false }} />
+      <AppDrawer.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
     </AppDrawer.Navigator>
   );
 };
 
-const HomePostStackScreen = () =>{
+const HomePostStackScreen = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-      <HomeStack.Screen name="PostScreen" component={PostScreen} options={{headerShown: false}}/>
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      <HomeStack.Screen name="PostDetailsScreen" component={PostDetailsScreen} options={{ headerShown: false }} />
     </HomeStack.Navigator>
   )
 }
@@ -67,12 +72,26 @@ const HomeTabScreen = () => {
             focused ? (
               <Entypo name="home" color="white" size={26} />
             ) : (
-              <AntDesign name="home" color="white" size={22} />
-            ),
-            headerShown: false
+                <AntDesign name="home" color="white" size={22} />
+              ),
+          headerShown: false
         }}
       />
       <HomeTab.Screen
+        name="CreatePostScreen"
+        component={CreatePostScreen}
+        options={{
+          tabBarLabel: "Create Post",
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <MaterialCommunityIcons name="pencil-plus" size={26} color="white" />
+            ) : (
+              <MaterialCommunityIcons name="pencil-plus-outline" size={26} color="white" />
+              ),
+          headerShown: false
+        }}
+      />
+            <HomeTab.Screen
         name="Notification"
         component={NotificationScreen}
         options={{
@@ -81,13 +100,13 @@ const HomeTabScreen = () => {
             focused ? (
               <Ionicons name="ios-notifications" size={26} color="white" />
             ) : (
-              <Ionicons
-                name="ios-notifications-outline"
-                size={22}
-                color="white"
-              />
-            ),
-            headerShown: false
+                <Ionicons
+                  name="ios-notifications-outline"
+                  size={22}
+                  color="white"
+                />
+              ),
+          headerShown: false
         }}
       />
     </HomeTab.Navigator>

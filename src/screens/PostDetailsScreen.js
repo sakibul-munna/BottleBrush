@@ -7,7 +7,7 @@ import { storeDataJSON, addDataJSON, getDataJSON } from '../functions/AsyncStora
 import CommentCard from "../components/CommentCard";
 import moment from "moment";
 
-const PostScreen = (props) => {
+const PostDetailsScreen = (props) => {
     let info = props.route.params;
     const [currentComment, setcurrentComment] = useState('');
     const [allComments, setallComments] = useState([]);
@@ -214,4 +214,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default PostScreen;
+export default PostDetailsScreen;
