@@ -44,7 +44,7 @@ const HomeStack = createStackNavigator();
 
 const AppDrawerScreen = () => {
   return (
-    <AppDrawer.Navigator>
+    <AppDrawer.Navigator drawerContentOptions={{activeTintColor: '#de3358'}}>
       <AppDrawer.Screen name="Home" component={HomeTabScreen} options={{ headerShown: false }} />
       <AppDrawer.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
     </AppDrawer.Navigator>
@@ -62,7 +62,7 @@ const HomePostStackScreen = () => {
 
 const HomeTabScreen = () => {
   return (
-    <HomeTab.Navigator initialRouteName="Home">
+    <HomeTab.Navigator initialRouteName="Home" barStyle={{ backgroundColor: '#de3358'}}>
       <HomeTab.Screen
         name="Home"
         component={HomePostStackScreen}
