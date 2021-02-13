@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image} from "react-native";
 import { Input, Button, Card } from "react-native-elements";
 import { MaterialCommunityIcons, FontAwesome5, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import firebase from "firebase/app";
@@ -21,10 +21,11 @@ const SignUp = (props) => {
         return (
             <View style={styles.viewStyle}>
                 <Card>
-                    <Card.Title style={styles.textStyle}>Welcome to BottleBrush</Card.Title>
-                    <Card.Divider />
+                    Image style={styles.tinyLogo} source={require('./../../assets/logo.png')} />
+//                     <Card.Title style={styles.textStyle}>Welcome to BottleBrush</Card.Title>
+//                     <Card.Divider />
                     <Input
-                        leftIcon={<MaterialIcons name="person" size={24} color="black" />}
+                        leftIcon={<MaterialIcons name="person" size={20} color="#de3358" />}
                         placeholder='Name'
                         onChangeText={
                             function (currentInput) {
@@ -34,7 +35,7 @@ const SignUp = (props) => {
                     />
 
                     <Input
-                        leftIcon={<MaterialCommunityIcons name="email-edit" size={24} color="black" />}
+                        leftIcon={<MaterialCommunityIcons name="email-edit" size={20} color="#de3358" />}
                         placeholder='IUT E-Mail Address'
                         onChangeText={
                             function (currentInput) {
@@ -45,7 +46,7 @@ const SignUp = (props) => {
                     />
 
                     <Input
-                        leftIcon={<MaterialCommunityIcons name="school" size={24} color="black" />}
+                        leftIcon={<MaterialCommunityIcons name="school" size={20} color="#de3358" />}
                         placeholder='Student ID'
                         onChangeText={
                             function (currentInput) {
@@ -56,7 +57,7 @@ const SignUp = (props) => {
 
 
                     <Input
-                        leftIcon={<FontAwesome5 name="key" size={24} color="black" />}
+                        leftIcon={<FontAwesome5 name="key" size={20} color="#de3358" />}
                         placeholder='Password'
                         onChangeText={
                             function (currentInput) {
@@ -66,7 +67,7 @@ const SignUp = (props) => {
                     />
 
                     <Input
-                        leftIcon={<MaterialIcons name="place" size={24} color="black" />}
+                        leftIcon={<MaterialIcons name="place" size={20} color="#de3358" />}
                         placeholder='IUT Batch Year'
                         onChangeText={
                             function (currentInput) {
@@ -84,9 +85,10 @@ const SignUp = (props) => {
                     />
                     <Button
                         style={styles.buttonStyle}
-                        icon={<AntDesign name="user" size={24} color="black" />}
+                        icon={<AntDesign name="user" size={20} color="white" />}
                         title='  Sign Up'
                         type='solid'
+                        buttonStyle={{ backgroundColor: "#de3358" }}
                         onPress={
                             function () {
                                 if (IUTMailAddress.includes("@iut-dhaka.edu")) {
@@ -127,9 +129,10 @@ const SignUp = (props) => {
                         }
                     />
                     <Button
-                        style={styles.buttonStyle}
-                        icon={<AntDesign name="login" size={24} color="black" />}
+//                         style={styles.buttonStyle}
+                        icon={<AntDesign name="login" size={20} color="black" />}
                         title="   Already Have an Account?"
+                        titleStyle={{ color: "#de3358" }}
                         type='clear'
                         onPress={
                             function () {
@@ -161,14 +164,15 @@ const styles = StyleSheet.create(
             margin: 10,
             paddingBottom: 10
         },
-        buttonStyle: {
-            padding: 10,
-            margin: 10,
+        
+        tinyLogo:{
+            width: 102,
+            height: 102,
+            alignSelf: "center",
+            marginTop:10,
+            marginBottom:40,
         },
-        buttonStyle2: {
-            marginRight: 100,
-            //borderColor: "linear-gradient(to right, #b24592 , #f15f79)"
-        },
+   
         title: {
             textAlign: 'center',
             fontSize: 20,
