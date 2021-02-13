@@ -21,9 +21,9 @@ const SignUp = (props) => {
         return (
             <View style={styles.viewStyle}>
                 <Card>
-                    Image style={styles.tinyLogo} source={require('./../../assets/logo.png')} />
-//                     <Card.Title style={styles.textStyle}>Welcome to BottleBrush</Card.Title>
-//                     <Card.Divider />
+                    <Image style={styles.tinyLogo} source={require('./../../assets/logo.png')} />
+                     //<Card.Title style={styles.textStyle}>Welcome to BottleBrush</Card.Title>
+                    //<Card.Divider />
                     <Input
                         leftIcon={<MaterialIcons name="person" size={20} color="#de3358" />}
                         placeholder='Name'
