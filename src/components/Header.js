@@ -8,6 +8,9 @@ const HeaderHome = (props) => {
     <AuthContext.Consumer>
       {(auth) => (
         <Header
+        containerStyle={{
+          backgroundColor: '#de3358',
+        }}
           leftComponent={{
             icon: "menu",
             color: "#fff",
