@@ -34,7 +34,7 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}else {
+} else {
   firebase.app(); // if already initialized, use that one
 }
 const AuthStack = createStackNavigator();
@@ -44,12 +44,16 @@ const HomeStack = createStackNavigator();
 
 const AppDrawerScreen = () => {
   return (
-    <AppDrawer.Navigator drawerContentOptions={{activeTintColor: '#de3358'}}>
-      <AppDrawer.Screen name="Home" component={HomeTabScreen} options={{ headerShown: false }} />
-      <AppDrawer.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-    </AppDrawer.Navigator>
-  );
-};
+    <AuthContext.Consumer>
+      {(auth) => (
+        <AppDrawer.Navigator drawerContentOptions={{ activeTintColor: '#de3358' }}>
+          <AppDrawer.Screen name="Home" component={HomeTabScreen} options={{ headerShown: false }} />
+          <AppDrawer.Screen name="Profile" children={() => <ProfileScreen currentUser={auth.CurrentUser} options={{ headerShown: false }} />} />
+        </AppDrawer.Navigator>
+      )}
+    </AuthContext.Consumer>
+  )
+}
 
 const HomePostStackScreen = () => {
   return (
@@ -62,7 +66,7 @@ const HomePostStackScreen = () => {
 
 const HomeTabScreen = () => {
   return (
-    <HomeTab.Navigator initialRouteName="Home" barStyle={{ backgroundColor: '#de3358'}}>
+    <HomeTab.Navigator initialRouteName="Home" barStyle={{ backgroundColor: '#de3358' }}>
       <HomeTab.Screen
         name="Home"
         component={HomePostStackScreen}
@@ -86,12 +90,12 @@ const HomeTabScreen = () => {
             focused ? (
               <MaterialCommunityIcons name="pencil-plus" size={26} color="white" />
             ) : (
-              <MaterialCommunityIcons name="pencil-plus-outline" size={26} color="white" />
+                <MaterialCommunityIcons name="pencil-plus-outline" size={26} color="white" />
               ),
           headerShown: false
         }}
       />
-            <HomeTab.Screen
+      <HomeTab.Screen
         name="NotificationScreen"
         component={NotificationScreen}
         options={{

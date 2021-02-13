@@ -19,69 +19,67 @@ const SignIn = (props) => {
         return (
             <AuthContext.Consumer>
                 {(auth) => (<View style={styles.viewStyle}>
-                   <View style={styles.viewStyle}>
-                    <Card>
-                        
-                        <Image style={styles.tinyLogo} source={require('./../../assets/logo.png')} />
-                       //<Card.Title style={styles.textStyle}>Sign In to BottleBrush</Card.Title>
-                       //<Card.Divider />
-                        <Input
-                            leftIcon={<MaterialCommunityIcons name="email-edit" size={20} color="#de3358" />}
-                            placeholder='IUT E-mail Address'
-                            onChangeText={
-                                function (currentInput) {
-                                    setEmail(currentInput);
+                    <View style={styles.viewStyle}>
+                        <Card>
+                            <Image style={styles.tinyLogo} source={require('./../../assets/logo.png')} />
+                            <Card.Title style={styles.textStyle}>Sign In to BottleBrush</Card.Title>
+                            <Card.Divider />
+                            <Input
+                                leftIcon={<MaterialCommunityIcons name="email-edit" size={20} color="#de3358" />}
+                                placeholder='IUT E-mail Address'
+                                onChangeText={
+                                    function (currentInput) {
+                                        setEmail(currentInput);
+                                    }
                                 }
-                            }
-                        />
+                            />
 
-                        <Input
-                            leftIcon={<FontAwesome5 name="key" size={20} color="#de3358" />}
-                            placeholder='Password'
-                            secureTextEntry={true}
-                            onChangeText={
-                                function (currentInput) {
-                                    setPassword(currentInput);
+                            <Input
+                                leftIcon={<FontAwesome5 name="key" size={20} color="#de3358" />}
+                                placeholder='Password'
+                                secureTextEntry={true}
+                                onChangeText={
+                                    function (currentInput) {
+                                        setPassword(currentInput);
+                                    }
                                 }
-                            }
-                        />
-                        <Button
-//                             style={styles.buttonStyle}
-                            icon={<AntDesign name="login" size={24} color="white" />}
-                            title='    Sign In'
-                            type='solid'
-                            buttonStyle={{ backgroundColor: "#de3358" }}
-                            onPress={async function () {
-                                setLoading(true)
-                                firebase
-                                    .auth()
-                                    .signInWithEmailAndPassword(Email, Password)
-                                    .then((userCreds) => {
-                                        setLoading(false)
-                                        auth.setIsLoggedIn(true);
-                                        auth.setCurrentUser(userCreds.user);
-                                    })
-                                    .catch((error) => {
-                                        setLoading(false)
-                                        alert(error);
-                                    });
-                            }}
-                        />
-                        <Button
-//                             style={styles.buttonStyle}
-                            icon={<AntDesign name="user" size={24} color="#de3358" />}
-                            title="    Don't Have an Account?"
-                            titleStyle={{ color: "#de3358" }}
-                            type='clear'
-                            onPress={
-                                function () {
-                                    props.navigation.navigate("SignUp");
+                            />
+                            <Button
+                                //                             style={styles.buttonStyle}
+                                icon={<AntDesign name="login" size={24} color="white" />}
+                                title='    Sign In'
+                                type='solid'
+                                buttonStyle={{ backgroundColor: "#de3358" }}
+                                onPress={async function () {
+                                    setLoading(true)
+                                    firebase
+                                        .auth()
+                                        .signInWithEmailAndPassword(Email, Password)
+                                        .then((userCreds) => {
+                                            setLoading(false)
+                                            auth.setIsLoggedIn(true);
+                                            auth.setCurrentUser(userCreds.user);
+                                        })
+                                        .catch((error) => {
+                                            setLoading(false)
+                                            alert(error);
+                                        });
+                                }}
+                            />
+                            <Button
+                                //                             style={styles.buttonStyle}
+                                icon={<AntDesign name="user" size={24} color="#de3358" />}
+                                title="    Don't Have an Account?"
+                                titleStyle={{ color: "#de3358" }}
+                                type='clear'
+                                onPress={
+                                    function () {
+                                        props.navigation.navigate("SignUp");
+                                    }
                                 }
-                            }
 
-                        />
-                        
-                    </Card>
+                            />
+                        </Card>
                     </View>
                 </View>)}
             </AuthContext.Consumer>
@@ -100,17 +98,17 @@ const styles = StyleSheet.create(
             justifyContent: 'center',
             backgroundColor: 'white'
         },
-         tinyLogo:{
+        tinyLogo: {
             width: 102,
             height: 102,
             alignSelf: "center",
-            marginTop:10,
-            marginBottom:40,
+            marginTop: 10,
+            marginBottom: 40,
         },
-//         buttonStyle: {
-//             padding: 10,
-//             margin: 10,
-//         }
+        //         buttonStyle: {
+        //             padding: 10,
+        //             margin: 10,
+        //         }
     }
 );
 
